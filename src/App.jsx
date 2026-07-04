@@ -206,7 +206,7 @@ const CameraApp = ({ onClose }) => (
 );
 
 const SettingsApp = ({ onClose }) => (
-  <div className="app-fullscreen settings-app">
+  <div className="app-fullscreen settings-app" style={{ overflowY: 'auto' }}>
     <h1 style={{ fontSize: 32, fontWeight: 'bold', marginBottom: 20, textAlign: 'center' }}>Ayarlar</h1>
     <div className="settings-list">
       <div className="settings-item">
@@ -214,16 +214,20 @@ const SettingsApp = ({ onClose }) => (
         <span className="desc">Versiyon 13</span>
       </div>
       <div className="settings-item">
-        <span className="title">İşlemci</span>
-        <span className="desc">Büyük işlemci</span>
+        <span className="title">İşlemci: Anıştayn beyninden bir tutam</span>
+        <span className="desc">Yan yan düşünme efektiyle</span>
       </div>
       <div className="settings-item">
-        <span className="title">RAM</span>
-        <span className="desc">Küçük RAM</span>
+        <span className="title">RAM: 1GB (Opsiyonel)</span>
+        <span className="desc">Oldukça kısıtlı</span>
       </div>
       <div className="settings-item">
-        <span className="title">Depolama</span>
-        <span className="desc">Devasa bellek (hiçbir mağduriyet anısını unutmayacak şekilde)</span>
+        <span className="title">Depolama: 13 TB</span>
+        <span className="desc">Yaşanan her mağduriyeti hatırlamaya yetecek kadar</span>
+      </div>
+      <div className="settings-item">
+        <span className="title">Kompakt Tasarım</span>
+        <span className="desc">Kısa boy</span>
       </div>
     </div>
     <div className="back-button back-button-dark" onClick={onClose} style={{backgroundColor: '#000'}} />

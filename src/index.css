@@ -173,3 +173,25 @@ body {
 .memory-card-front, .memory-card-back { position: absolute; width: 100%; height: 100%; -webkit-backface-visibility: hidden; backface-visibility: hidden; display: flex; justify-content: center; align-items: center; border-radius: 8px; }
 .memory-card-front { background-color: #747d8c; }
 .memory-card-back { background-color: #ffffff; color: #2f3542; transform: rotateY(180deg); }
+
+@media (max-width: 500px), (max-height: 850px) {
+  .iphone-container {
+    width: 100vw;
+    height: 100dvh;
+    border-radius: 0;
+    box-shadow: none;
+    border: none;
+  }
+  .notch {
+    display: none;
+  }
+  .screen-content {
+    padding-top: 20px;
+  }
+  .back-button {
+    bottom: 30px; 
+  }
+  .dock {
+    margin: 10px 10px 25px 10px;
+  }
+}
