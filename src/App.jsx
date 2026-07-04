@@ -402,7 +402,7 @@ const RockPaperScissorsApp = ({ onClose }) => {
   return (
     <div className="app-fullscreen" style={{ backgroundColor: '#ff9ff3', color: '#2f3640', display: 'flex', flexDirection: 'column' }}>
       
-      {/* Top Half: Computer or Title */}
+      {/* Top Half: Computer */}
       <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', borderBottom: gameState !== 'idle' ? '2px dashed rgba(0,0,0,0.1)' : 'none' }}>
         {gameState === 'idle' && (
           <h2 style={{ fontSize: 32, fontWeight: 'bold' }}>Taş Kağıt Makas</h2>
@@ -422,18 +422,26 @@ const RockPaperScissorsApp = ({ onClose }) => {
         )}
 
         {gameState === 'result' && (
-          <motion.div
-            initial={{ y: -50, opacity: 0 }}
-            animate={
-              computerChoice === 'taş' ? { y: [0, 180, 180], scale: [1, 1.5, 1.2], rotate: [0, 20, 0] } :
-              computerChoice === 'makas' ? { y: [0, 180, 180], scale: [1, 1.2, 1.2], rotate: [0, -30, 30, 0] } :
-              /* kağıt */ { y: [0, 180, 180], scale: [1, 2.5, 2.5] }
-            }
-            transition={{ duration: 0.7, ease: "easeIn" }}
-            style={{ fontSize: 100, position: 'absolute', zIndex: 10 }}
-          >
-            {choices[computerChoice].emoji}
-          </motion.div>
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }} animate={{ opacity: 1 }} 
+              style={{ position: 'absolute', top: '10%', fontSize: 24, fontWeight: 'bold', background: 'rgba(255,255,255,0.5)', padding: '5px 15px', borderRadius: 20 }}
+            >
+              🤖 Bilgisayar
+            </motion.div>
+            <motion.div
+              initial={{ y: -50, opacity: 0 }}
+              animate={
+                computerChoice === 'taş' ? { y: [0, 150, 150], scale: [1, 1.5, 1.2], rotate: [0, 20, 0] } :
+                computerChoice === 'makas' ? { y: [0, 150, 150], scale: [1, 1.2, 1.2], rotate: [0, -30, 30, 0] } :
+                /* kağıt */ { y: [0, 150, 150], scale: [1, 2.5, 2.5] }
+              }
+              transition={{ duration: 0.7, ease: "easeIn" }}
+              style={{ fontSize: 100, position: 'absolute', zIndex: 10 }}
+            >
+              {choices[computerChoice].emoji}
+            </motion.div>
+          </>
         )}
       </div>
 
@@ -443,7 +451,7 @@ const RockPaperScissorsApp = ({ onClose }) => {
           initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
           style={{ textAlign: 'center', zIndex: 20, position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%' }}
         >
-          <div style={{ fontSize: 32, fontWeight: 'bold', color: '#ff4757', textShadow: '0 2px 4px rgba(255,255,255,0.8)' }}>
+          <div style={{ fontSize: 28, fontWeight: 'bold', color: '#ff4757', textShadow: '0 2px 4px rgba(255,255,255,0.9)' }}>
             {computerChoice.toUpperCase()} {playerChoice.toUpperCase()}'ı {choices[playerChoice].action}!
           </div>
           <button onClick={resetGame} style={{ marginTop: 20, padding: '10px 20px', fontSize: 18, borderRadius: 20, border: 'none', background: '#2f3640', color: 'white', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>Tekrar Oyna</button>
@@ -451,7 +459,16 @@ const RockPaperScissorsApp = ({ onClose }) => {
       )}
 
       {/* Bottom Half: Player */}
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+      <div style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
+        {(gameState === 'countdown' || gameState === 'result') && (
+          <motion.div 
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }} 
+            style={{ position: 'absolute', bottom: '15%', fontSize: 24, fontWeight: 'bold', background: 'rgba(255,255,255,0.5)', padding: '5px 15px', borderRadius: 20 }}
+          >
+            👤 Sen
+          </motion.div>
+        )}
+
         {gameState === 'idle' && (
           <div style={{ display: 'flex', gap: 20 }}>
             {Object.entries(choices).map(([key, val]) => (
@@ -477,7 +494,7 @@ const RockPaperScissorsApp = ({ onClose }) => {
               ) : { y: 0, opacity: 1 }
             }
             transition={gameState === 'result' ? { duration: 0.5, delay: 0.4 } : {}}
-            style={{ fontSize: 100 }}
+            style={{ fontSize: 100, marginBottom: 40 }}
           >
             {choices[playerChoice].emoji}
           </motion.div>
