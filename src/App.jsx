@@ -363,6 +363,93 @@ const MusicApp = ({ onClose }) => {
   );
 };
 
+const RockPaperScissorsApp = ({ onClose }) => {
+  const [playerChoice, setPlayerChoice] = useState(null);
+  const [computerChoice, setComputerChoice] = useState(null);
+  const [countdown, setCountdown] = useState(null);
+  const [result, setResult] = useState(null);
+
+  const choices = {
+    'taş': { emoji: '🪨', beatsBy: 'kağıt' },
+    'kağıt': { emoji: '📄', beatsBy: 'makas' },
+    'makas': { emoji: '✂️', beatsBy: 'taş' }
+  };
+
+  const playGame = (choice) => {
+    if (countdown !== null) return;
+    setPlayerChoice(choice);
+    setComputerChoice(null);
+    setResult(null);
+    setCountdown(3);
+
+    let count = 3;
+    const interval = setInterval(() => {
+      count--;
+      if (count > 0) {
+        setCountdown(count);
+      } else {
+        clearInterval(interval);
+        setCountdown(null);
+        // Bilgisayar her zaman kazanır (hileli)
+        const winChoice = choices[choice].beatsBy;
+        setComputerChoice(winChoice);
+        setResult('Kaybettin! 😢');
+      }
+    }, 800);
+  };
+
+  return (
+    <div className="app-fullscreen" style={{ backgroundColor: '#ff9ff3', color: '#2f3640', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
+      <h2 style={{ fontSize: 32, marginBottom: 40, fontWeight: 'bold' }}>Taş Kağıt Makas</h2>
+      
+      <div style={{ display: 'flex', justifyContent: 'center', gap: 20, marginBottom: 40 }}>
+        {Object.entries(choices).map(([key, val]) => (
+          <button 
+            key={key} 
+            onClick={() => playGame(key)}
+            style={{ fontSize: 40, padding: '15px', borderRadius: '50%', border: 'none', background: 'white', cursor: 'pointer', transform: playerChoice === key ? 'scale(1.2)' : 'scale(1)', transition: 'transform 0.2s', boxShadow: '0 4px 10px rgba(0,0,0,0.2)' }}
+            disabled={countdown !== null}
+          >
+            {val.emoji}
+          </button>
+        ))}
+      </div>
+
+      <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <AnimatePresence mode="wait">
+          {countdown !== null && (
+            <motion.div
+              key={countdown}
+              initial={{ scale: 0.5, opacity: 0 }}
+              animate={{ scale: 1.5, opacity: 1 }}
+              exit={{ scale: 2, opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              style={{ fontSize: 80, fontWeight: 'bold' }}
+            >
+              {countdown}
+            </motion.div>
+          )}
+          
+          {computerChoice && (
+            <motion.div
+              key="result"
+              initial={{ y: 50, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              style={{ textAlign: 'center' }}
+            >
+              <div style={{ fontSize: 24, marginBottom: 10 }}>Bilgisayar:</div>
+              <div style={{ fontSize: 80 }}>{choices[computerChoice].emoji}</div>
+              <div style={{ fontSize: 32, fontWeight: 'bold', color: '#ff4757', marginTop: 20 }}>{result}</div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
+      <div className="back-button back-button-dark" onClick={onClose} style={{backgroundColor: '#000'}} />
+    </div>
+  );
+};
+
 export default function App() {
   const [currentTime, setCurrentTime] = useState(new Date());
   const [activeApp, setActiveApp] = useState(null);
@@ -379,16 +466,17 @@ export default function App() {
   const pages = [
     [
       { id: 'birthday', label: 'Eymen ❤️', icon: Gift, color: '#ff4757', custom: '🎁' },
-      { id: 'tictactoe', label: 'XOX', icon: Gamepad2, color: '#2ed573' },
-      { id: 'memory', label: 'Hafıza', icon: Gamepad2, color: '#ffa502' },
       { id: 'weather', label: 'Hava', icon: Cloud, color: '#1e90ff' },
       { id: 'calendar', label: 'Takvim', icon: Calendar, color: '#ff6348' },
       { id: 'calculator', label: 'Hesap', icon: Calculator, color: '#3742fa' },
       { id: 'camera', label: 'Kamera', icon: Camera, color: '#747d8c' },
-      { id: 'settings', label: 'Ayarlar', icon: Settings, color: '#57606f' },
+      { id: 'map', label: 'Harita', icon: Map, color: '#2ed573' },
     ],
     [
-      { id: 'map', label: 'Harita', icon: Map, color: '#2ed573' },
+      { id: 'tictactoe', label: 'XOX', icon: Gamepad2, color: '#2ed573' },
+      { id: 'memory', label: 'Hafıza', icon: Gamepad2, color: '#ffa502' },
+      { id: 'rps', label: 'T.K.M', icon: Gamepad2, color: '#e056fd', custom: '✊' },
+      { id: 'settings', label: 'Ayarlar', icon: Settings, color: '#57606f' },
     ]
   ];
 
@@ -474,6 +562,7 @@ export default function App() {
             {activeApp === 'browser' && <BrowserApp onClose={closeApp} />}
             {activeApp === 'messages' && <MessagesApp onClose={closeApp} />}
             {activeApp === 'music' && <MusicApp onClose={closeApp} />}
+            {activeApp === 'rps' && <RockPaperScissorsApp onClose={closeApp} />}
           </motion.div>
         )}
       </AnimatePresence>

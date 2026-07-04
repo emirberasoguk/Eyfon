@@ -9,6 +9,7 @@ Eyfon 13, Eymen'in doğum günü için özel olarak tasarlanmış, tarayıcı ü
 - 🎮 **Mini Oyunlar:** 
   - **XOX (Tic-Tac-Toe):** Arkadaşlarınızla oynayabileceğiniz klasik XOX.
   - **Hafıza Oyunu:** Eğlenceli emojileri eşleştirme oyunu.
+  - **Taş Kağıt Makas (T.K.M):** Kazanması imkansız olan, sinir bozucu ama eğlenceli bir taş kağıt makas oyunu. ✊
   - **T-Rex (Çöp Adam) Run:** İnternet yokken oynadığımız efsane kaktüsten atlama oyununun sarışın çöp adamlı hali! 🦖👱‍♂️
 - ⚙️ **Eğlenceli Sistem Uygulamaları:** 
   - Anıştayn beyinli işlemciler ve hiçbir mağduriyeti unutmayan 13 TB devasa belleğe sahip **Ayarlar**.
