@@ -364,22 +364,21 @@ const MusicApp = ({ onClose }) => {
 };
 
 const RockPaperScissorsApp = ({ onClose }) => {
+  const [gameState, setGameState] = useState('idle');
   const [playerChoice, setPlayerChoice] = useState(null);
   const [computerChoice, setComputerChoice] = useState(null);
   const [countdown, setCountdown] = useState(null);
-  const [result, setResult] = useState(null);
 
   const choices = {
-    'taş': { emoji: '🪨', beatsBy: 'kağıt' },
-    'kağıt': { emoji: '📄', beatsBy: 'makas' },
-    'makas': { emoji: '✂️', beatsBy: 'taş' }
+    'taş': { emoji: '🪨', beatsBy: 'kağıt', action: 'Sardı' },
+    'kağıt': { emoji: '📄', beatsBy: 'makas', action: 'Kesti' },
+    'makas': { emoji: '✂️', beatsBy: 'taş', action: 'Kırdı' }
   };
 
   const playGame = (choice) => {
-    if (countdown !== null) return;
     setPlayerChoice(choice);
-    setComputerChoice(null);
-    setResult(null);
+    setComputerChoice(choices[choice].beatsBy);
+    setGameState('countdown');
     setCountdown(3);
 
     let count = 3;
@@ -389,60 +388,100 @@ const RockPaperScissorsApp = ({ onClose }) => {
         setCountdown(count);
       } else {
         clearInterval(interval);
-        setCountdown(null);
-        // Bilgisayar her zaman kazanır (hileli)
-        const winChoice = choices[choice].beatsBy;
-        setComputerChoice(winChoice);
-        setResult('Kaybettin! 😢');
+        setGameState('result');
       }
     }, 800);
   };
 
+  const resetGame = () => {
+    setGameState('idle');
+    setPlayerChoice(null);
+    setComputerChoice(null);
+  };
+
   return (
-    <div className="app-fullscreen" style={{ backgroundColor: '#ff9ff3', color: '#2f3640', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center' }}>
-      <h2 style={{ fontSize: 32, marginBottom: 40, fontWeight: 'bold' }}>Taş Kağıt Makas</h2>
+    <div className="app-fullscreen" style={{ backgroundColor: '#ff9ff3', color: '#2f3640', display: 'flex', flexDirection: 'column' }}>
       
-      <div style={{ display: 'flex', justifyContent: 'center', gap: 20, marginBottom: 40 }}>
-        {Object.entries(choices).map(([key, val]) => (
-          <button 
-            key={key} 
-            onClick={() => playGame(key)}
-            style={{ fontSize: 40, padding: '15px', borderRadius: '50%', border: 'none', background: 'white', cursor: 'pointer', transform: playerChoice === key ? 'scale(1.2)' : 'scale(1)', transition: 'transform 0.2s', boxShadow: '0 4px 10px rgba(0,0,0,0.2)' }}
-            disabled={countdown !== null}
+      {/* Top Half: Computer or Title */}
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', position: 'relative', borderBottom: gameState !== 'idle' ? '2px dashed rgba(0,0,0,0.1)' : 'none' }}>
+        {gameState === 'idle' && (
+          <h2 style={{ fontSize: 32, fontWeight: 'bold' }}>Taş Kağıt Makas</h2>
+        )}
+
+        {gameState === 'countdown' && (
+          <motion.div
+            key={countdown}
+            initial={{ scale: 0.5, opacity: 0 }}
+            animate={{ scale: 1.5, opacity: 1 }}
+            exit={{ scale: 2, opacity: 0 }}
+            transition={{ duration: 0.5 }}
+            style={{ fontSize: 80, fontWeight: 'bold' }}
           >
-            {val.emoji}
-          </button>
-        ))}
+            {countdown}
+          </motion.div>
+        )}
+
+        {gameState === 'result' && (
+          <motion.div
+            initial={{ y: -50, opacity: 0 }}
+            animate={
+              computerChoice === 'taş' ? { y: [0, 180, 180], scale: [1, 1.5, 1.2], rotate: [0, 20, 0] } :
+              computerChoice === 'makas' ? { y: [0, 180, 180], scale: [1, 1.2, 1.2], rotate: [0, -30, 30, 0] } :
+              /* kağıt */ { y: [0, 180, 180], scale: [1, 2.5, 2.5] }
+            }
+            transition={{ duration: 0.7, ease: "easeIn" }}
+            style={{ fontSize: 100, position: 'absolute', zIndex: 10 }}
+          >
+            {choices[computerChoice].emoji}
+          </motion.div>
+        )}
       </div>
 
-      <div style={{ height: 200, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-        <AnimatePresence mode="wait">
-          {countdown !== null && (
-            <motion.div
-              key={countdown}
-              initial={{ scale: 0.5, opacity: 0 }}
-              animate={{ scale: 1.5, opacity: 1 }}
-              exit={{ scale: 2, opacity: 0 }}
-              transition={{ duration: 0.5 }}
-              style={{ fontSize: 80, fontWeight: 'bold' }}
-            >
-              {countdown}
-            </motion.div>
-          )}
-          
-          {computerChoice && (
-            <motion.div
-              key="result"
-              initial={{ y: 50, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              style={{ textAlign: 'center' }}
-            >
-              <div style={{ fontSize: 24, marginBottom: 10 }}>Bilgisayar:</div>
-              <div style={{ fontSize: 80 }}>{choices[computerChoice].emoji}</div>
-              <div style={{ fontSize: 32, fontWeight: 'bold', color: '#ff4757', marginTop: 20 }}>{result}</div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+      {/* Center Message */}
+      {gameState === 'result' && (
+        <motion.div 
+          initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
+          style={{ textAlign: 'center', zIndex: 20, position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', width: '100%' }}
+        >
+          <div style={{ fontSize: 32, fontWeight: 'bold', color: '#ff4757', textShadow: '0 2px 4px rgba(255,255,255,0.8)' }}>
+            {computerChoice.toUpperCase()} {playerChoice.toUpperCase()}'ı {choices[playerChoice].action}!
+          </div>
+          <button onClick={resetGame} style={{ marginTop: 20, padding: '10px 20px', fontSize: 18, borderRadius: 20, border: 'none', background: '#2f3640', color: 'white', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.3)' }}>Tekrar Oyna</button>
+        </motion.div>
+      )}
+
+      {/* Bottom Half: Player */}
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        {gameState === 'idle' && (
+          <div style={{ display: 'flex', gap: 20 }}>
+            {Object.entries(choices).map(([key, val]) => (
+              <button 
+                key={key} 
+                onClick={() => playGame(key)}
+                style={{ fontSize: 40, padding: '15px', borderRadius: '50%', border: 'none', background: 'white', cursor: 'pointer', boxShadow: '0 4px 10px rgba(0,0,0,0.2)' }}
+              >
+                {val.emoji}
+              </button>
+            ))}
+          </div>
+        )}
+
+        {(gameState === 'countdown' || gameState === 'result') && (
+          <motion.div
+            initial={{ y: 50, opacity: 0 }}
+            animate={
+              gameState === 'result' ? (
+                computerChoice === 'taş' ? { opacity: [1, 1, 0], scale: [1, 0.8, 0], rotate: [0, 45, 90] } :
+                computerChoice === 'makas' ? { opacity: [1, 1, 0], x: [0, -30, 30], rotate: [0, -20, 20] } :
+                /* kağıt */ { opacity: [1, 0], scale: [1, 0.5] }
+              ) : { y: 0, opacity: 1 }
+            }
+            transition={gameState === 'result' ? { duration: 0.5, delay: 0.4 } : {}}
+            style={{ fontSize: 100 }}
+          >
+            {choices[playerChoice].emoji}
+          </motion.div>
+        )}
       </div>
 
       <div className="back-button back-button-dark" onClick={onClose} style={{backgroundColor: '#000'}} />
