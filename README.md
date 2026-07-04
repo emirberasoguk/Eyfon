@@ -1,16 +1,47 @@
-# React + Vite
+# 📱 Eyfon 13 - Doğum Günü Özel Sürümü 🎁
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Eyfon 13, Eymen'in doğum günü için özel olarak tasarlanmış, tarayıcı üzerinde çalışan eğlenceli ve interaktif bir "akıllı telefon" simülasyonudur. React ve Vite kullanılarak geliştirilmiş olup tamamen mobil uyumlu, pürüzsüz animasyonlara sahip ve sürprizlerle dolu bir hediye projesidir! 🎉
 
-Currently, two official plugins are available:
+## ✨ Özellikler
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- 📱 **Gerçekçi Arayüz:** Modern "glassmorphism" tasarımı, dinamik çentik ve akıcı sayfa geçişleri.
+- 🎂 **Doğum Günü Uygulaması:** Ekranda konfeti yağmurlarıyla dolu, Eymen'e özel bir kutlama.
+- 🎮 **Mini Oyunlar:** 
+  - **XOX (Tic-Tac-Toe):** Arkadaşlarınızla oynayabileceğiniz klasik XOX.
+  - **Hafıza Oyunu:** Eğlenceli emojileri eşleştirme oyunu.
+  - **T-Rex (Çöp Adam) Run:** İnternet yokken oynadığımız efsane kaktüsten atlama oyununun sarışın çöp adamlı hali! 🦖👱‍♂️
+- ⚙️ **Eğlenceli Sistem Uygulamaları:** 
+  - Anıştayn beyinli işlemciler ve hiçbir mağduriyeti unutmayan 13 TB devasa belleğe sahip **Ayarlar**.
+  - Özgüven pompalayan **Kamera**.
+  - Fonksiyonel sürgülü **Hesap Makinesi** ve **Hava Durumu**.
+  - Arkadaşlarla sahte etkileşim içeren iMessage tasarımlı **Mesajlar** ve daha fazlası!
 
-## React Compiler
+## 🚀 Kurulum & Çalıştırma
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Projeyi kendi bilgisayarınızda çalıştırmak için aşağıdaki adımları izleyebilirsiniz:
 
-## Expanding the Oxlint configuration
+1. Depoyu bilgisayarınıza indirin:
+   ```bash
+   git clone https://github.com/emirberasoguk/Eyfon.git
+   ```
+2. Proje dizinine gidin ve gerekli paketleri yükleyin:
+   ```bash
+   cd Eyfon
+   npm install
+   ```
+3. Geliştirici sunucusunu başlatın:
+   ```bash
+   npm run dev
+   ```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+## 🛠️ Kullanılan Teknolojiler
+
+- **[React](https://reactjs.org/)** - Bileşen yapısı ve arayüz için
+- **[Vite](https://vitejs.dev/)** - Hızlı derleme ve geliştirme ortamı için
+- **[Framer Motion](https://www.framer.com/motion/)** - Sayfa kaydırma ve menü animasyonları için
+- **[Lucide React](https://lucide.dev/)** - Telefon ikonları için
+- **[Canvas Confetti](https://www.npmjs.com/package/canvas-confetti)** - Kutlama efektleri için
+
+## 📄 Lisans
+
+Bu proje **MIT Lisansı** ile lisanslanmıştır. Daha fazla bilgi için `LICENSE` dosyasına göz atabilirsiniz. Özgürce kullanıp geliştirebilirsiniz! ❤️
