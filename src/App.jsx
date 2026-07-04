@@ -432,9 +432,9 @@ const RockPaperScissorsApp = ({ onClose }) => {
             <motion.div
               initial={{ y: -50, opacity: 0 }}
               animate={
-                computerChoice === 'taş' ? { y: [0, 150, 150], scale: [1, 1.5, 1.2], rotate: [0, 20, 0] } :
-                computerChoice === 'makas' ? { y: [0, 150, 150], scale: [1, 1.2, 1.2], rotate: [0, -30, 30, 0] } :
-                /* kağıt */ { y: [0, 150, 150], scale: [1, 2.5, 2.5] }
+                computerChoice === 'taş' ? { y: [0, 150, 150], scale: [1, 1.5, 1.2], rotate: [0, 20, 0], opacity: 1 } :
+                computerChoice === 'makas' ? { y: [0, 150, 150], scale: [1, 1.2, 1.2], rotate: [0, -30, 30, 0], opacity: 1 } :
+                /* kağıt */ { y: [0, 150, 150], scale: [1, 2.5, 2.5], opacity: 1 }
               }
               transition={{ duration: 0.7, ease: "easeIn" }}
               style={{ fontSize: 100, position: 'absolute', zIndex: 10 }}
